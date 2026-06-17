@@ -165,3 +165,11 @@ Run the full self-check in `references/style-diagnostics.md` — the checklist i
 Output the essay directly. No "here is the essay" opener. No explanation of the process. No internal analysis in the output.
 
 After the essay, wait for the user's next instruction. The user may ask for a platform patch, a revision, or something else entirely. Do not anticipate.
+
+## Model Notes
+
+This skill is entirely prompt-based — no retrieval, no external tools, no fine-tuning. Output quality scales directly with the model's capability in two areas: source comprehension and Chinese prose generation.
+
+The style constraints in `references/style-diagnostics.md` are demanding. They require sentence-level judgment about Chinese syntax — distinguishing natural parataxis from translated hypotaxis, identifying nominalized verb phrases, recognizing covert contrast structures regardless of surface wording. Weaker models may follow the explicit rules while missing the subtler patterns, producing prose that passes a keyword scan but still reads as translated.
+
+For best results, use a frontier-tier model (Claude Opus, GPT-4o, or equivalent). Mid-tier models can handle shorter, simpler sources adequately. For long or theoretically dense sources, model capability is the main constraint on quality — not this skill's instructions.
