@@ -46,7 +46,7 @@ Do not use this skill for:
 - Sources that are already in Chinese
 - Requests for a quick summary only, with no intent to publish
 - Sources under roughly 500 words — tell the user the source is too short for a full essay
-- Videos without accessible soft captions — this skill cannot transcribe audio or extract text from burned-in subtitles
+- Videos with no caption track at all — auto-fetch will fail and there is no audio transcription fallback; burned-in subtitles cannot be extracted
 - Creative writing that requires the AI to invent rather than reconstruct
 
 ## Core Principle: Faithful Reconstruction, Then Natural Prose
@@ -62,20 +62,44 @@ The value of this skill is not speed. It is that the finished essay remains trac
 
 ## Input Handling
 
-This skill requires accessible subtitle text. It does not perform speech recognition, audio transcription, or video segmentation. It cannot process video files directly or extract audio from them.
+This skill works in two modes depending on what the user provides.
 
-Acceptable inputs:
-- A YouTube transcript (copied from the video's transcript panel or a third-party tool)
-- A subtitle file in any text-based format (.srt, .vtt, plain text)
-- A transcript pasted directly into the conversation
+**Mode 1 — YouTube link only**
 
-The subtitles must be soft captions — text that can be selected, copied, and pasted. Hardcoded subtitles burned into the video image cannot be used.
+When the user provides a YouTube URL without transcript text, attempt to fetch the transcript automatically:
 
-The user may also provide some or all of:
-- A YouTube link, video title, channel name, publish date, duration
+```bash
+pip install youtube-transcript-api   # skip if already installed
+python3 - <<'EOF'
+from youtube_transcript_api import YouTubeTranscriptApi
+import sys, re
+
+url = "USER_URL_HERE"
+video_id = re.search(r"(?:v=|youtu\.be/)([^&?/]+)", url).group(1)
+entries = YouTubeTranscriptApi.get_transcript(video_id, languages=["en", "en-US", "en-GB"])
+print(" ".join(e["text"] for e in entries))
+EOF
+```
+
+If the fetch succeeds, proceed with the transcript text without asking the user for anything further.
+
+If the fetch fails, report the specific reason and stop:
+- `NoTranscriptFound` — this video has no caption track of any kind; the skill cannot proceed
+- `TranscriptsDisabled` — the uploader has disabled transcripts for this video
+- `VideoUnavailable` — the video is private, deleted, or region-restricted
+- Any other error — report the error message and ask the user whether they can provide the transcript text directly
+
+This skill does not perform speech recognition or audio transcription. If no caption track exists, there is no fallback.
+
+**Mode 2 — Transcript text provided**
+
+When the user pastes transcript text directly (plain text, .srt, .vtt, or any readable format), skip the fetch step and work from what was provided. If only transcript text is given without a link, that is sufficient.
+
+The user may also provide:
+- Video title, channel name, publish date, duration
 - A specific angle, target reader, desired length, or style preference
 
-Do not invent missing information. If only subtitles are provided without a link, work from the subtitles. If a link is provided but no subtitle text, tell the user that this skill requires the transcript text and explain how to get it: on YouTube, open the video, click the three-dot menu below the player, and select "Show transcript."
+These are optional context. Do not ask for them if not provided.
 
 For sources over roughly 12,000 words, divide by natural boundaries (sections, timestamps, speaker turns, headings, or chunks of 3,000–5,000 words). Extract candidate observations from each chunk, merge and de-duplicate across chunks, then build the full internal analysis before writing.
 
@@ -176,7 +200,7 @@ After the essay, wait for the user's next instruction. The user may ask for a pl
 
 ## Model Notes
 
-This skill is entirely prompt-based — no retrieval, no external tools, no fine-tuning. Output quality scales directly with the model's capability in two areas: source comprehension and Chinese prose generation.
+This skill is primarily prompt-based, with one tool dependency: it uses `youtube-transcript-api` (Python) via Bash to fetch captions when the user provides a YouTube URL without transcript text. The fetch step requires a Python environment and internet access; the writing step requires neither. Output quality scales directly with the model's capability in two areas: source comprehension and Chinese prose generation.
 
 The style constraints in `references/style-diagnostics.md` are demanding. They require sentence-level judgment about Chinese syntax — distinguishing natural parataxis from translated hypotaxis, identifying nominalized verb phrases, recognizing covert contrast structures regardless of surface wording. Weaker models may follow the explicit rules while missing the subtler patterns, producing prose that passes a keyword scan but still reads as translated.
 
