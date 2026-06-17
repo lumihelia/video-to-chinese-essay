@@ -72,12 +72,13 @@ When the user provides a YouTube URL without transcript text, attempt to fetch t
 pip install youtube-transcript-api   # skip if already installed
 python3 - <<'EOF'
 from youtube_transcript_api import YouTubeTranscriptApi
-import sys, re
+import re
 
 url = "USER_URL_HERE"
 video_id = re.search(r"(?:v=|youtu\.be/)([^&?/]+)", url).group(1)
-entries = YouTubeTranscriptApi.get_transcript(video_id, languages=["en", "en-US", "en-GB"])
-print(" ".join(e["text"] for e in entries))
+api = YouTubeTranscriptApi()
+transcript = api.fetch(video_id, languages=["en"])
+print(" ".join(snippet.text for snippet in transcript))
 EOF
 ```
 
