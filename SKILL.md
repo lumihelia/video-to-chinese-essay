@@ -45,7 +45,8 @@ Do not use this skill for:
 
 - Sources that are already in Chinese
 - Requests for a quick summary only, with no intent to publish
-- Sources under roughly 500 words — run Stage 1 only and tell the user the source is too short for a full essay
+- Sources under roughly 500 words — tell the user the source is too short for a full essay
+- Videos without accessible soft captions — this skill cannot transcribe audio or extract text from burned-in subtitles
 - Creative writing that requires the AI to invent rather than reconstruct
 
 ## Core Principle: Faithful Reconstruction, Then Natural Prose
@@ -61,13 +62,20 @@ The value of this skill is not speed. It is that the finished essay remains trac
 
 ## Input Handling
 
-The user may provide some or all of:
+This skill requires accessible subtitle text. It does not perform speech recognition, audio transcription, or video segmentation. It cannot process video files directly or extract audio from them.
 
+Acceptable inputs:
+- A YouTube transcript (copied from the video's transcript panel or a third-party tool)
+- A subtitle file in any text-based format (.srt, .vtt, plain text)
+- A transcript pasted directly into the conversation
+
+The subtitles must be soft captions — text that can be selected, copied, and pasted. Hardcoded subtitles burned into the video image cannot be used.
+
+The user may also provide some or all of:
 - A YouTube link, video title, channel name, publish date, duration
-- Subtitle text or a transcript
 - A specific angle, target reader, desired length, or style preference
 
-Do not invent missing information. If only subtitles are provided without a link, work from the subtitles. If a link is provided but no subtitles and the source cannot be accessed, ask for the subtitle text.
+Do not invent missing information. If only subtitles are provided without a link, work from the subtitles. If a link is provided but no subtitle text, tell the user that this skill requires the transcript text and explain how to get it: on YouTube, open the video, click the three-dot menu below the player, and select "Show transcript."
 
 For sources over roughly 12,000 words, divide by natural boundaries (sections, timestamps, speaker turns, headings, or chunks of 3,000–5,000 words). Extract candidate observations from each chunk, merge and de-duplicate across chunks, then build the full internal analysis before writing.
 
