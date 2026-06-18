@@ -7,7 +7,7 @@ roles: [creator, researcher, journalist]
 outputs: [essay, article, newsletter]
 scenarios: [content-creation, research]
 runtimes: [chat]
-platforms: [claude-code, openclaw, hermes, cursor]
+platforms: [claude-code, openclaw, hermes, cursor, codex]
 tags: [chinese-writing, content-creation, video-transcript, hackathon]
 version: 1.0.0
 author: Helia
