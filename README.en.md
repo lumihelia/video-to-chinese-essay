@@ -4,7 +4,7 @@
 
 An Agent Skill for turning English long-form source material into Chinese essays. Inputs can include YouTube links, subtitles, interview transcripts, podcast transcripts, lectures, or other long English text. The workflow reconstructs the source first, then writes a standalone Chinese essay rather than translating sentence by sentence.
 
-**Current version:** `1.3.0`
+**Current version:** `1.3.1`
 
 The system has two layers:
 
@@ -43,7 +43,7 @@ Its June 2026 `style-diagnostics.md` already contained rules around Chinese para
 Starting with `v1.1.0`, the local diagnostic layer is a **versioned vendored profile** rather than an untracked copy:
 
 ```text
-upstream: chinese-semantic-flow@0.4.1
+upstream: chinese-semantic-flow@0.4.2
 sync-mode: vendored-profile
 ```
 
@@ -53,6 +53,10 @@ That means:
 - B-first generation, forward semantic progression, the contrast gate, and fact/inference boundaries have an explicit upstream version;
 - verb-chain diagnostics, English passive/possessive cleanup, weak verbs, essay tone, and transcript quotation remain task-specific local additions;
 - relevant upstream minor/major changes trigger a deliberate drift review instead of silently replacing the local profile.
+
+## v1.3.1: follows Chinese Semantic Flow 0.4.2
+
+- Adds a check against rendering English fixed phrases word by word into Chinese terms (e.g. gold standard → 金标准), the most common lexical translationese in English-to-Chinese work.
 
 ## v1.3.0: aligned with Chinese Semantic Flow 0.4.1
 
@@ -186,7 +190,7 @@ README.en.md
 LICENSE
 ```
 
-`SKILL.md` defines source reconstruction and essay generation. `style-diagnostics.md` is the vendored prose profile tracking `chinese-semantic-flow@0.4.1`. `platform-patches.md` is loaded only for explicit platform adaptation.
+`SKILL.md` defines source reconstruction and essay generation. `style-diagnostics.md` is the vendored prose profile tracking `chinese-semantic-flow@0.4.2`. `platform-patches.md` is loaded only for explicit platform adaptation.
 
 ## License
 

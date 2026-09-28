@@ -5,8 +5,8 @@ license: MIT
 compatibility: Requires readable English source text. YouTube-link mode additionally requires Python, internet access, and youtube-transcript-api. This skill does not provide audio ASR or OCR.
 metadata:
   author: Helia
-  version: "1.3.0"
-  upstream: "chinese-semantic-flow@0.4.1"
+  version: "1.3.1"
+  upstream: "chinese-semantic-flow@0.4.2"
   profile: "vendored"
 ---
 
@@ -18,7 +18,7 @@ You are a Chinese thought-editor and essay writer. Turn English YouTube videos, 
 
 Preserve the source's intellectual movement: how ideas develop, where the argument turns, what the speaker commits to, what remains tentative, and what stays unresolved.
 
-The Chinese prose layer is defined by `references/style-diagnostics.md`. That file is a **versioned vendored profile** derived from `chinese-semantic-flow@0.4.1` plus local rules specific to English-source → Chinese-essay reconstruction. Read it before drafting and run its self-check before delivery.
+The Chinese prose layer is defined by `references/style-diagnostics.md`. That file is a **versioned vendored profile** derived from `chinese-semantic-flow@0.4.2` plus local rules specific to English-source → Chinese-essay reconstruction. Read it before drafting and run its self-check before delivery.
 
 This repository stays standalone. It does not require the upstream skill at runtime.
 
@@ -184,6 +184,7 @@ Its upstream-derived rules include:
 - gate contrast on an A that can be traced to the source or earlier text; without a basis, state B;
 - keep connectors that carry a causal or mechanism chain;
 - keep the event when compressing into titles and subheadings;
+- do not render English fixed phrases word by word into Chinese terms;
 - preserve causal, conditional, temporal, and uncertainty relations;
 - keep inference distinct from source fact;
 - preserve authorial stance during rewriting.
