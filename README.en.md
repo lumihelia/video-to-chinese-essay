@@ -4,7 +4,7 @@
 
 An Agent Skill for turning English long-form source material into Chinese essays. Inputs can include YouTube links, subtitles, interview transcripts, podcast transcripts, lectures, or other long English text. The workflow reconstructs the source first, then writes a standalone Chinese essay rather than translating sentence by sentence.
 
-**Current version:** `1.1.0`
+**Current version:** `1.3.0`
 
 The system has two layers:
 
@@ -43,7 +43,7 @@ Its June 2026 `style-diagnostics.md` already contained rules around Chinese para
 Starting with `v1.1.0`, the local diagnostic layer is a **versioned vendored profile** rather than an untracked copy:
 
 ```text
-upstream: chinese-semantic-flow@0.2.0
+upstream: chinese-semantic-flow@0.4.1
 sync-mode: vendored-profile
 ```
 
@@ -53,6 +53,15 @@ That means:
 - B-first generation, forward semantic progression, the contrast gate, and fact/inference boundaries have an explicit upstream version;
 - verb-chain diagnostics, English passive/possessive cleanup, weak verbs, essay tone, and transcript quotation remain task-specific local additions;
 - relevant upstream minor/major changes trigger a deliberate drift review instead of silently replacing the local profile.
+
+## v1.3.0: aligned with Chinese Semantic Flow 0.4.1
+
+- The contrast gate now requires textual evidence: A must point to the source, earlier text, or a misconception whose source can be named; without a basis, state B.
+- B-first does not require opening with the conclusion; the source structure decides where the essay starts.
+- In mechanism explanations, connectors that carry a causal chain stay.
+- Adds a compression check for titles and subheadings.
+- The final self-check is tiered into always-on and as-needed checks.
+- Local additions (verb chains, passive/possessive cleanup, weak verbs, generic `you`, essay tone, transcript quotation) are unchanged.
 
 ## B-first in this task
 
@@ -177,7 +186,7 @@ README.en.md
 LICENSE
 ```
 
-`SKILL.md` defines source reconstruction and essay generation. `style-diagnostics.md` is the vendored prose profile tracking `chinese-semantic-flow@0.2.0`. `platform-patches.md` is loaded only for explicit platform adaptation.
+`SKILL.md` defines source reconstruction and essay generation. `style-diagnostics.md` is the vendored prose profile tracking `chinese-semantic-flow@0.4.1`. `platform-patches.md` is loaded only for explicit platform adaptation.
 
 ## License
 

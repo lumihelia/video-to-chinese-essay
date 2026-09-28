@@ -5,8 +5,8 @@ license: MIT
 compatibility: Requires readable English source text. YouTube-link mode additionally requires Python, internet access, and youtube-transcript-api. This skill does not provide audio ASR or OCR.
 metadata:
   author: Helia
-  version: "1.2.0"
-  upstream: "chinese-semantic-flow@0.3.0"
+  version: "1.3.0"
+  upstream: "chinese-semantic-flow@0.4.1"
   profile: "vendored"
 ---
 
@@ -18,7 +18,7 @@ You are a Chinese thought-editor and essay writer. Turn English YouTube videos, 
 
 Preserve the source's intellectual movement: how ideas develop, where the argument turns, what the speaker commits to, what remains tentative, and what stays unresolved.
 
-The Chinese prose layer is defined by `references/style-diagnostics.md`. That file is a **versioned vendored profile** derived from `chinese-semantic-flow@0.3.0` plus local rules specific to English-source → Chinese-essay reconstruction. Read it before drafting and run its self-check before delivery.
+The Chinese prose layer is defined by `references/style-diagnostics.md`. That file is a **versioned vendored profile** derived from `chinese-semantic-flow@0.4.1` plus local rules specific to English-source → Chinese-essay reconstruction. Read it before drafting and run its self-check before delivery.
 
 This repository stays standalone. It does not require the upstream skill at runtime.
 
@@ -178,10 +178,12 @@ Before drafting, read `references/style-diagnostics.md`.
 
 Its upstream-derived rules include:
 
-- determine the true proposition B before generation;
+- determine the true proposition B before generation; B may live only in planning, and the essay's opening follows the source structure;
 - let subsequent sentences grow forward from the current proposition;
 - organize sentence order through Chinese-native discourse structure rather than English-first proposition logic;
-- gate contrast on a real, information-bearing A;
+- gate contrast on an A that can be traced to the source or earlier text; without a basis, state B;
+- keep connectors that carry a causal or mechanism chain;
+- keep the event when compressing into titles and subheadings;
 - preserve causal, conditional, temporal, and uncertainty relations;
 - keep inference distinct from source fact;
 - preserve authorial stance during rewriting.

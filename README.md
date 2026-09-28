@@ -4,7 +4,7 @@
 
 一个把英文长内容重写成中文文章的 Agent Skill。输入可以是 YouTube 链接、字幕、访谈逐字稿、播客 transcript 或其他英文长文本；输出目标是先重建原内容的论证与思想推进，再写成可独立阅读的中文长文。
 
-**当前版本：** `1.1.0`
+**当前版本：** `1.3.0`
 
 这里的核心工作分成两层：
 
@@ -43,7 +43,7 @@
 从 `v1.1.0` 开始，本仓库不再让这套规则无标记地独立漂移，而是把 `style-diagnostics.md` 定义成一个 **versioned vendored profile**：
 
 ```text
-upstream: chinese-semantic-flow@0.2.0
+upstream: chinese-semantic-flow@0.4.1
 sync-mode: vendored-profile
 ```
 
@@ -55,6 +55,15 @@ sync-mode: vendored-profile
 - upstream 的相关 minor / major 版本变化时，再做一次 drift review，而不是自动覆盖本地 profile。
 
 这种方式保留 standalone Skill 的稳定性，也能知道每条通用中文规则当前追踪的是哪一版 canonical。
+
+## v1.3.0：对齐 Chinese Semantic Flow 0.4.1
+
+- 转折门控改为看文本依据：A 要能指向 source、前文或能说出出处的误解，说不出依据时直说 B；
+- B-first 不要求文章把结论放在开头，起点由 source 结构决定；
+- 解释机制时，承担因果的连接词保留，不为了意合删掉；
+- 新增标题与小标题的压缩检查；
+- 完稿自检分为每次必查与按需检查；
+- 动词链、被动 / 所有格、弱动词、generic `you`、essay tone、transcript 引用等 local additions 不变。
 
 ## B-first 在这里怎么用
 
@@ -179,7 +188,7 @@ README.en.md
 LICENSE
 ```
 
-`SKILL.md` 决定 source reconstruction 与文章生成流程；`style-diagnostics.md` 是追踪 `chinese-semantic-flow@0.2.0` 的 vendored prose profile；`platform-patches.md` 只在明确需要平台适配时使用。
+`SKILL.md` 决定 source reconstruction 与文章生成流程；`style-diagnostics.md` 是追踪 `chinese-semantic-flow@0.4.1` 的 vendored prose profile；`platform-patches.md` 只在明确需要平台适配时使用。
 
 ## License
 
